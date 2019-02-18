@@ -38,8 +38,23 @@ class LoginPage {
       const email = inputs.find(i => i.type === 'email');
       const password = inputs.find(i => i.type === 'password');
       console.log('form value:', email.value, password.value);
+      new DasboardPage(this.appBody, {username: email.value});
     })
   }
 }
+
+
+// Class DasboardPage
+class DasboardPage {
+  constructor(appBody, formValues) {
+    this.appBody = appBody;
+    this.username = formValues.username;
+    this.initUI();
+  }
+  initUI() {
+    this.appBody.innerHTML = `<h1>Hello ${this.username}!!</h1>`
+  }
+}
+
 
 new MyApp(document.querySelector('my-app')).start();
