@@ -1,4 +1,4 @@
-
+import {LoginPage} from './features/login-page/login-page';
 
 // class MyApp
 class MyApp {
@@ -12,50 +12,7 @@ class MyApp {
 }
 
 
-// Class LoginPage
-class LoginPage {
-  constructor(appBody) {
-    this.appBody = appBody;
-    this.initUI();
-    this.loadEventsUI();
-  }
 
-  initUI() {
-    const pageSkeleton = `
-      <h1>Hello world Step 3</h1>
-      <form>
-        <input type="email" placeholder="your email"><br/>
-        <input type="password" placeholder="your password">
-        <button>Login</button>
-      </form>
-    `;
-    this.appBody.innerHTML = pageSkeleton;
-  }
-
-  loadEventsUI() {
-    this.appBody.querySelector('form').addEventListener('submit', e => {
-      e.preventDefault();
-      const inputs = [...this.appBody.querySelectorAll('input')];
-      const email = inputs.find(i => i.type === 'email');
-      const password = inputs.find(i => i.type === 'password');
-      console.log('form value:', email.value, password.value);
-      new DasboardPage(this.appBody, {username: email.value});
-    })
-  }
-}
-
-
-// Class DasboardPage
-class DasboardPage {
-  constructor(appBody, formValues) {
-    this.appBody = appBody;
-    this.username = formValues.username;
-    this.initUI();
-  }
-  initUI() {
-    this.appBody.innerHTML = `<h1>Hello ${this.username}!!</h1>`
-  }
-}
 
 
 new MyApp(document.querySelector('my-app')).start();
