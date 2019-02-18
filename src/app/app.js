@@ -7,7 +7,20 @@ class MyApp {
   }
 
   start() {
-    this.appBody.innerHTML = '<h1>Hello world</h1>'
+    new LoginPage(this.appBody);
+  }
+}
+
+
+// Class LoginPage
+class LoginPage {
+  constructor(appBody) {
+    this.appBody = appBody;
+    this.initUI()
+  }
+
+  initUI() {
+    this.appBody.innerHTML = '<h1>Hello world Step 2</h1>'
   }
 }
 
