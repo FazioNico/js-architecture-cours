@@ -1,3 +1,4 @@
+import { pageSkeleton } from "./login-page.ui";
 
 // Class LoginPage
 export class LoginPage {
@@ -8,15 +9,13 @@ export class LoginPage {
   }
 
   initUI() {
-    const pageSkeleton = `
-      <h1>Hello world Step 3</h1>
-      <form>
-        <input type="email" placeholder="your email"><br/>
-        <input type="password" placeholder="your password">
-        <button>Login</button>
-      </form>
-    `;
-    this.appBody.innerHTML = pageSkeleton;
+    const skeleton = getPageSkeleton();
+    this.appBody.innerHTML = skeleton;
+  }
+
+  getPageSkeleton() {
+    const data = {};
+    return pageSkeleton(data);
   }
 
   loadEventsUI() {
