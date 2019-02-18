@@ -21,7 +21,7 @@ class LoginPage {
   }
 
   initUI() {
-    this.appBody.innerHTML = `
+    const pageSkeleton = `
       <h1>Hello world Step 3</h1>
       <form>
         <input type="email" placeholder="your email"><br/>
@@ -29,6 +29,7 @@ class LoginPage {
         <button>Login</button>
       </form>
     `;
+    this.appBody.innerHTML = pageSkeleton;
   }
 
   loadEventsUI() {
