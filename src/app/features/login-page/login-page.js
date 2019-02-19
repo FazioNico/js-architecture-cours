@@ -1,4 +1,5 @@
 import { pageSkeleton } from "./login-page.ui";
+import { DasboardPage } from "../dashboard-page/dashboard-page";
 
 // Class LoginPage
 export class LoginPage {
@@ -9,7 +10,7 @@ export class LoginPage {
   }
 
   initUI() {
-    const skeleton = getPageSkeleton();
+    const skeleton = this.getPageSkeleton();
     this.appBody.innerHTML = skeleton;
   }
 
