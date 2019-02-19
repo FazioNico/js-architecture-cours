@@ -3,6 +3,6 @@ export const pageSkeleton = (data) =>  `
 <form>
   <input type="email" placeholder="your email"><br/>
   <input type="password" placeholder="your password">
-  <button>Login</button>
+  <button class="waves-effect waves-light btn">Login</button>
 </form>
 `;
