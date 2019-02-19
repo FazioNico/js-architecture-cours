@@ -1,3 +1,5 @@
+import { Timer } from "../../components/timer/time-class";
+
 // Class DasboardPage
 export class DasboardPage {
   constructor(appBody, formValues) {
@@ -7,6 +9,10 @@ export class DasboardPage {
   }
   
   initUI() {
-    this.appBody.innerHTML = `<h1>Hello ${this.username}!!</h1>`
+    this.appBody.innerHTML = `
+    <h1>Hello ${this.username}!!</h1>
+    <my-timer></my-timer>
+    `;
+    new Timer(document.querySelector('my-timer'));
   }
 }
