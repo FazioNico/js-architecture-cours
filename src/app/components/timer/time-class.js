@@ -8,22 +8,13 @@ export class Timer {
   }
 
   run() {
+    this.root.innerHTML = `${new Date().toLocaleTimeString()}`;
+    this.interval();
+  }
+
+  interval() {
     setInterval(() => {
-      const h = new Date().getHours();
-      switch (true) {
-          case h < 10:
-              this.root.innerHTML = `Bon petit-déj!! Il est ${new Date().toLocaleTimeString()}`
-              break;
-          case h < 17:
-              this.root.innerHTML = `Bonjour il est ${new Date().toLocaleTimeString()}`
-              break;
-      
-          case h > 17:
-              this.root.innerHTML = `Bonsoir il est ${new Date().toLocaleTimeString()}`
-              break;
-          default:
-              break;
-      }
-    }, 100)    
+      this.root.innerHTML = `${new Date().toLocaleTimeString()}`
+    }, 1000)    
   }
 }

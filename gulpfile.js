@@ -6,6 +6,7 @@ var source = require('vinyl-source-stream');
 var browserify = require('browserify');
 var rmHtmlComments  = require('gulp-remove-html-comments');
 var concat = require('gulp-concat');
+const minify = require('gulp-minify');
 
 // Config of project folders
 var config = {
@@ -24,6 +25,23 @@ gulp.task("build-js", function(){
   .pipe(gulp.dest(config.desDir + '/js'))
   .pipe(reload({stream:true}));
 });
+
+// TODO: check why is not working....
+// Task to build JS files 
+gulp.task("build-js-prod", function(){
+  return browserify("src/app/app.js",{
+     debug: true
+   })
+   .transform(babelify.configure({
+     presets : ['@babel/preset-env']
+   }))
+   .bundle()
+   .pipe(minify())
+   .pipe(source("bundle.js"))
+   .pipe(gulp.dest(config.desDir + '/js'))
+   .pipe(reload({stream:true}));
+ });
+
 
 gulp.task("copy-html", function(){
   return gulp.src(['./src/*.html'])
@@ -79,4 +97,10 @@ gulp.task('default',  gulp.series(
   'startServer'
 ));
 
-
+gulp.task('prod',  gulp.series(
+  'build-js-prod',
+  'copy-html',
+  'copy-css',
+  'js-dependecies',
+  'css-dependecies',
+));
