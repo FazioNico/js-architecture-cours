@@ -8,13 +8,13 @@ export class Say {
     }
   
     run() {
-      this.switch();
+      this.displayText();
       setInterval(() => {
-        this.switch();
+        this.displayText();
       }, 10000)    
     }
 
-    switch() {
+    displayText() {
       const h = new Date().getHours();
       switch (true) {
           case h < 10:
