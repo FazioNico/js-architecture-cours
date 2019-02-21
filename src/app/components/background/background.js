@@ -42,10 +42,6 @@ export class BackgroundRandom {
 
   displayInBackground(imgUrl) {
     this.root.style.background = `url(${imgUrl}) center center no-repeat`;
-    this.root.style.color = `#fff`;
     this.root.style.backgroundSize = `cover`;
-    this.root.style.display = `block`;
-    this.root.style.width = `100%`;
-    this.root.style.height = `100%`;
   }
 }

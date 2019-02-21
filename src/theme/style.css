@@ -1,5 +1,13 @@
 html, body {
     height: 100%;
+    color:#333;
+}
+my-app {
+    height: 100%;
+    width: 100%;
+    display: block;
+    color:#333;
+    background-size:cover;
 }
 h1 {
     color: blue;
