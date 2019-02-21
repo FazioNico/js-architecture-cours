@@ -16,28 +16,31 @@ export class Favoris {
 
   buildTemplate() {
     this.root.innerHTML = `
-      <div id="user">
-        ${this.user.email} <button id="logout">logout</logout>
-      </div>
       <div id="btnList"></div>
       <div id="btnForm">
-        <form>
+        <span id="settings">Settings</span>
+        <div id="user">
+          Connecté en tant que <i>${this.user.email}</i> <button id="logout">logout</logout>
+        </div>
+        <form class="container">
           ${
             (this.links.length > 0)
             ? `${this.links.map(l => `
-            <div>
-              <input type="text"> <input type="url"> 
+            <div class="row">
+              <div class="col s6"><input type="text"></div>
+              <div class="col s6"><input type="url"></div>
             </div>
             `).join('')}`
             : `
-            <div>
-              <input type="text"> <input type="url"> 
+            <div class="row">
+              <div class="col s6"><input type="text"></div>
+              <div class="col s6"><input type="url"></div>
             </div>
               `
           }
-          <button type="submit">Save</button>
+          <span class="waves-effect waves-light btn btn-small" id="add">+</span>
+          <button class="waves-effect waves-light btn btn-small" type="submit">Save</button>
         </form>
-        <button id="add">add</button>
       </div>
     `;
   }
@@ -58,11 +61,16 @@ export class Favoris {
       window.open(e.target.getAttribute('data-url'));
     })
     this.root.querySelector('#add').addEventListener('click', e => {
-      this.root.querySelector('form button').insertAdjacentHTML('beforebegin', `
-      <div>
-        <input type="text"> <input type="url"> 
+      this.root.querySelector('form span').insertAdjacentHTML('beforebegin', `
+      <div class="row">
+        <div class="col s6"><input type="text"></div>
+        <div class="col s6"><input type="url"></div>
       </div>
       `)
+    })
+    // listener for annimation div
+    this.root.querySelector('#settings').addEventListener('click', e => {
+      this.root.querySelector('#btnForm').classList.toggle('open');
     })
   }
 
@@ -70,7 +78,7 @@ export class Favoris {
     // stoper le reload de la page
     e.preventDefault();
     const dataToSave = {}
-    const divs = e.target.querySelectorAll('div');
+    const divs = e.target.querySelectorAll('div.row');
     [...divs].map((div,i) => {
       const inputs = div.querySelectorAll('input');
       dataToSave[i] = {};
@@ -96,7 +104,7 @@ export class Favoris {
     // pour tout les element de la liste....
     this.links.map((link, index) => {
       // je cherche la div qui correspond à l'index de mon `link`
-      const div = this.root.querySelectorAll('#btnForm div')[index];
+      const div = this.root.querySelectorAll('#btnForm div.row')[index];
       console.log(div);
       if (!div) return;
       // je cherche mtn tt les inputs de ma div
@@ -112,7 +120,7 @@ export class Favoris {
       })    
     })
     this.root.querySelector('#btnList').innerHTML = `
-      ${this.links.map(link => `<button data-url="${link.val().url}">${link.val().text}</button>`).join('')}
+      ${this.links.map(link => `<button class="link waves-effect transparent waves-light btn" data-url="${link.val().url}">${link.val().text}</button> `).join('')}
     `;
   }
 }

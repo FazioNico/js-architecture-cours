@@ -6,8 +6,8 @@ var source = require('vinyl-source-stream');
 var browserify = require('browserify');
 var rmHtmlComments  = require('gulp-remove-html-comments');
 var concat = require('gulp-concat');
-var concat = require('gulp-concat');
 const uglify = require('gulp-uglify');
+var concatCss = require('gulp-concat-css');
 
 // Config of project folders
 var config = {
@@ -53,6 +53,7 @@ gulp.task("copy-html", function(){
 
 gulp.task("copy-css", function(){
   return gulp.src(['./src/theme/*.css'])
+  .pipe(concatCss("style.css"))
   .pipe(gulp.dest(config.desDir + '/css'))
   .pipe(reload({stream:true}))
 });

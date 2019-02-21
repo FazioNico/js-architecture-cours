@@ -3,6 +3,7 @@ import { Say } from "../../components/say/say";
 import { Favoris } from "../../components/favoris/favoris";
 import { Meteo } from "../../components/meteo/meteo";
 import { BackgroundRandom } from "../../components/background/background";
+import { SearchGoogle } from "../../components/search/search";
 
 // Class DasboardPage
 export class DasboardPage {
@@ -24,12 +25,18 @@ export class DasboardPage {
     // ensuite inserer les HTML
     .then(() => {
       this.appBody.innerHTML = `
-      <my-timer></my-timer>
-      <my-say></my-say> ${this.username}
-      <my-favoris></my-favoris>
-      <my-meteo></my-meteo>
+      <section>
+        <my-search></my-search>
+        <div class="shadow">
+          <my-timer></my-timer>
+          <my-say></my-say> ${this.username}
+        </div>
+        <my-favoris></my-favoris>
+        <my-meteo></my-meteo>
+      </section>
       `;
       // demarer les component
+      new SearchGoogle(document.querySelector('my-search'));
       new Timer(document.querySelector('my-timer'));
       new Say(document.querySelector('my-say'));
       new Favoris(document.querySelector('my-favoris'), this.db, this.auth);

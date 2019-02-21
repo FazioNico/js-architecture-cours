@@ -1,0 +1,26 @@
+
+
+nav {
+    position: absolute;
+    width: 100%;
+    top:0px;
+    left: 0;
+}
+.material-icons, a{
+    color: rgba(255, 255, 255, 0.50);
+}
+input#search {
+    border: none;
+}
+.input-field .prefix.active,.material-icons:hover, a:hover, address:hover,
+input#search:focus:not(.browser-default)+label i, 
+input#search:focus:not(.browser-default)+label i, 
+input#search:focus:not(.browser-default) ~ .mdi-navigation-close, 
+input#search:focus:not(.browser-default) ~ .material-icons {
+    color: rgba(255, 255, 255, 1);
+}
+input#search:focus:not(.browser-default){
+    background-color: transparent;
+    color: rgba(255, 255, 255, 1);
+    border: none;
+} 
