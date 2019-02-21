@@ -17,9 +17,10 @@ export class DasboardPage {
   initUI() {
     // TODO: cacher le HTML pour l'afficher 
     // que quand l'app est ready
-
+    this.appBody.style.opacity = 0;
+    this.appBody.style.transition = 'opacity 0.2s ease';
     // charger l'image de BG
-    new BackgroundRandom().run()
+    new BackgroundRandom(this.appBody).run()
     // ensuite inserer les HTML
     .then(() => {
       this.appBody.innerHTML = `
@@ -37,6 +38,7 @@ export class DasboardPage {
     // faire un effet fade pour afficher le HTML
     .then(() => {
       console.log('Final step: fade effect...');
+      this.appBody.style.opacity = 1;
     })
     // prendre en charge les erreur
     .catch(err => console.log(err));

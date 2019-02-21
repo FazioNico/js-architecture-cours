@@ -1,6 +1,8 @@
 export class BackgroundRandom {
-  constructor() {
-    this.apiKey = 'f0e9207feb394989d135e7c759d6f93372319ce326e617244b3b9a27a526f884';
+  constructor(htmlElement) {
+    this.root = htmlElement;
+    this.apiKey_off = 'f0e9207feb394989d135e7c759d6f93372319ce326e617244b3b9a27a526f884';
+    this.apiKey = 'cf484c93862ded3a57f5ea28d11c88f238e4c3f123a5f6ba35f28c69011924d6';
     this.apiUrl = 'https://api.unsplash.com/photos/random?client_id=' + this.apiKey;
   }
 
@@ -39,8 +41,11 @@ export class BackgroundRandom {
   }
 
   displayInBackground(imgUrl) {
-    document.body.style.background = `url(${imgUrl}) center center no-repeat`;
-    document.body.style.color = `#fff`;
-    document.body.style.backgroundSize = `cover`;
+    this.root.style.background = `url(${imgUrl}) center center no-repeat`;
+    this.root.style.color = `#fff`;
+    this.root.style.backgroundSize = `cover`;
+    this.root.style.display = `block`;
+    this.root.style.width = `100%`;
+    this.root.style.height = `100%`;
   }
 }
