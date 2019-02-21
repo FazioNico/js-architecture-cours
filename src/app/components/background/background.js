@@ -5,17 +5,21 @@ export class BackgroundRandom {
   }
 
   run() {
+    // faire la requête http pour recupérer l'addres de l'image
     return this.requestAPI()
+    // créer un listener de chargement d'image
     .then(result => {
       const {urls: {
         regular: imgUrl = null
       } = {}} = result;
       return this.listenImageLoad(imgUrl);
     })
+    // addicher l'image dans le BG
     .then(imgUrl => {
       // display image in background
       this.displayInBackground(imgUrl)
     })
+    .catch(err => console.log(err))
   }
 
   requestAPI() {

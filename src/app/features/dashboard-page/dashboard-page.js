@@ -15,7 +15,12 @@ export class DasboardPage {
   }
   
   initUI() {
+    // TODO: cacher le HTML pour l'afficher 
+    // que quand l'app est ready
+
+    // charger l'image de BG
     new BackgroundRandom().run()
+    // ensuite inserer les HTML
     .then(() => {
       this.appBody.innerHTML = `
       <my-timer></my-timer>
@@ -23,18 +28,17 @@ export class DasboardPage {
       <my-favoris></my-favoris>
       <my-meteo></my-meteo>
       `;
+      // demarer les component
       new Timer(document.querySelector('my-timer'));
       new Say(document.querySelector('my-say'));
       new Favoris(document.querySelector('my-favoris'), this.db, this.auth);
       new Meteo(document.querySelector('my-meteo'));      
     })
+    // faire un effet fade pour afficher le HTML
     .then(() => {
-      console.log('FInal step: fade effect...');
+      console.log('Final step: fade effect...');
     })
+    // prendre en charge les erreur
     .catch(err => console.log(err));
-
-
-    // .then() effet de "fade"...
-    // .catch pour choper l'erreur si il y en a une...
   }
 }
