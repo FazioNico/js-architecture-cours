@@ -5,7 +5,8 @@
   "main": "index.js",
   "scripts": {
     "dev": "gulp",
-    "prod": "gulp prod",
+    "prod": "gulp prod && npm run serve:prod",
+    "serve:prod": "http-server ./dist -o",
     "test": "echo \"Error: no test specified\" && exit 1"
   },
   "repository": {
@@ -25,6 +26,14 @@
     "babelify": "^10.0.0",
     "browser-sync": "^2.26.3",
     "browserify": "^16.2.3",
+    "del": "^3.0.0",
+    "eslint": "^5.14.1",
+    "eslint-config-google": "^0.12.0",
+    "eslint-config-standard": "^12.0.0",
+    "eslint-plugin-import": "^2.16.0",
+    "eslint-plugin-node": "^8.0.1",
+    "eslint-plugin-promise": "^4.0.1",
+    "eslint-plugin-standard": "^4.0.0",
     "gulp": "^4.0.0",
     "gulp-babel": "^8.0.0",
     "gulp-concat": "^2.6.1",
@@ -33,6 +42,8 @@
     "gulp-remove-html-comments": "^1.0.1",
     "gulp-uglify": "^3.0.1",
     "gulp-util": "^3.0.8",
+    "http-server": "^0.11.1",
+    "vinyl-buffer": "^1.0.1",
     "vinyl-source-stream": "^2.0.0",
     "vinyl-transform": "^1.0.0"
   },

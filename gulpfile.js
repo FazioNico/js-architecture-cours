@@ -1,13 +1,17 @@
 var gulp = require('gulp');
-var babel = require('gulp-babel'); 
+var gutil = require('gulp-util');
 var babelify = require('babelify'); 
 var transform = require('vinyl-transform'); 
 var source = require('vinyl-source-stream');
+var buffer = require('vinyl-buffer');
 var browserify = require('browserify');
 var rmHtmlComments  = require('gulp-remove-html-comments');
+var uglify = require('gulp-uglify');
 var concat = require('gulp-concat');
-const uglify = require('gulp-uglify');
 var concatCss = require('gulp-concat-css');
+var browserSync = require('browser-sync').create();
+var reload = browserSync.reload;
+var del = require('del');
 
 // Config of project folders
 var config = {
@@ -22,25 +26,37 @@ gulp.task("build-js", function(){
     presets : ['@babel/preset-env']
   }))
   .bundle()
+  // display better error message on error
+  .on('error', err => {
+    gutil.log("Browserify Error", err.message);
+    gutil.log(gutil.colors.red('#############################'))
+    gutil.log(gutil.colors.red('#############################'))
+    gutil.log(gutil.colors.red('[Gulp] Error compilation !!!'))
+  })
   .pipe(source("bundle.js"))
   .pipe(gulp.dest(config.desDir + '/js'))
   .pipe(reload({stream:true}));
 });
 
-// TODO: check why is not working....
 // Task to build JS files 
 gulp.task("build-js-prod", function(){
-  const b = browserify("src/app/app.js",{
-     debug: true
-   })
-   return b.transform(babelify.configure({
-     presets : ['@babel/preset-env']
-   }))
-   .bundle()
-   .pipe(source("bundle.js"))
-   .pipe(uglify())
-   .pipe(gulp.dest(config.desDir + '/js'))
-   .pipe(reload({stream:true}));
+  return browserify("src/app/app.js",{
+      debug: false
+    })
+    .transform(babelify.configure({
+      presets : ['@babel/preset-env']
+    }))
+    .bundle()
+    // display better error message on error
+    .on('error', err => {
+      gutil.log(gutil.colors.red('#############################'))
+      gutil.log(gutil.colors.red('#############################'))
+      gutil.log(gutil.colors.red('[Gulp] Error compilation !!!'))
+    })
+    .pipe(source("bundle.js"))
+    .pipe(buffer())
+    .pipe(uglify())
+    .pipe(gulp.dest(config.desDir + '/js'));
  });
 
 
@@ -73,36 +89,47 @@ gulp.task("js-dependecies", function(){
   .pipe(gulp.dest(config.desDir + '/js'))
 });
 
-var browserSync = require('browser-sync').create();
-var reload = browserSync.reload;
 // Task to run local server
-gulp.task("startServer",  function() {
+gulp.task("startServer",  function(cb) {
   browserSync.init({
     server: {
         baseDir: config.desDir
     },
     notify: true
-  });
+  }, cb);
 });
 
-gulp.watch('./src/app/**/*.js', { events: 'all' }, gulp.series('build-js'));
-gulp.watch('./src/**/*.html', { events: 'all' }, gulp.series('copy-html'));
-gulp.watch('./src/**/*.css', { events: 'all' }, gulp.series('copy-css'));
 
-gulp.task('default',  gulp.series(
+gulp.task('clean', function (cb) {
+  return del('./dist', cb);
+});
+
+// speed dev build using parallel()
+gulp.task('dev', gulp.parallel(
   'build-js',
   'copy-html',
   'copy-css',
   'js-dependecies',
   'css-dependecies',
-  // run startServer at end
-  'startServer'
 ));
 
+// use series() for build prod
 gulp.task('prod',  gulp.series(
+  'clean',
   'build-js-prod',
   'copy-html',
   'copy-css',
   'js-dependecies',
   'css-dependecies',
 ));
+
+gulp.task('watch', function () {
+  gulp.watch('./src/app/**/*.js', { events: 'all' }, gulp.series('build-js'));
+  gulp.watch('./src/**/*.html', { events: 'all' }, gulp.series('copy-html'));
+  gulp.watch('./src/**/*.css', { events: 'all' }, gulp.series('copy-css'));
+});
+
+gulp.task('default',  
+  gulp.series('clean', 'dev', 'startServer', 'watch')
+);
+
