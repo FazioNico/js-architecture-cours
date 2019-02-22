@@ -42,7 +42,7 @@ gulp.task("build-js", function(){
 
 // Task to build JS files 
 gulp.task("build-js-prod", function(){
-  return browserify("src/app/app.js",{
+  return browserify("src/main.js",{
       debug: false
     })
     .transform(babelify.configure({
