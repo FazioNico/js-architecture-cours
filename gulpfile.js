@@ -12,6 +12,8 @@ var concatCss = require('gulp-concat-css');
 var browserSync = require('browser-sync').create();
 var reload = browserSync.reload;
 var del = require('del');
+var ftp = require( 'vinyl-ftp' );
+var ghPages = require('gulp-gh-pages');
 
 // Config of project folders
 var config = {
@@ -19,7 +21,7 @@ var config = {
 }
 // Task to build JS files
 gulp.task("build-js", function(){
- return browserify("src/app/app.js",{
+ return browserify("src/main.js",{
     debug: true
   })
   .transform(babelify.configure({
@@ -103,6 +105,31 @@ gulp.task("startServer",  function(cb) {
 gulp.task('clean', function (cb) {
   return del('./dist', cb);
 });
+
+
+gulp.task( 'deploy', function () {
+  var conn = ftp.create( {
+      host:     'ateliers.nomades.ch',
+      user:     'fazio',
+      password: 'nicfaz',
+      parallel: 10,
+      log:      gutil.log
+  });
+  var globs = [
+      './dist/**/*'
+  ];
+  // using base = '.' will transfer everything to /public_html correctly
+  // turn off buffering in gulp.src for best performance
+  return gulp.src( globs, { base: './dist', buffer: false } )
+      .pipe( conn.newer( '/public_html' ) ) // only upload newer files
+      .pipe( conn.dest( '/public_html/testjs' ) );
+});
+ 
+gulp.task('deploy', function() {
+  return gulp.src('./dist/**/*')
+    .pipe(ghPages());
+});
+
 
 // speed dev build using parallel()
 gulp.task('dev', gulp.parallel(
