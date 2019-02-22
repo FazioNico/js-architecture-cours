@@ -109,9 +109,9 @@ gulp.task('clean', function (cb) {
 
 gulp.task( 'deploy', function () {
   var conn = ftp.create( {
-      host:     'ateliers.nomades.ch',
-      user:     'fazio',
-      password: 'nicfaz',
+      host:     'xxx',
+      user:     'xxx',
+      password: 'xxx',
       parallel: 10,
       log:      gutil.log
   });
@@ -125,7 +125,7 @@ gulp.task( 'deploy', function () {
       .pipe( conn.dest( '/public_html/testjs' ) );
 });
  
-gulp.task('deploy', function() {
+gulp.task('deploy:gh', function() {
   return gulp.src('./dist/**/*')
     .pipe(ghPages());
 });
